@@ -1,0 +1,24 @@
+PPIDというのが親プロセスのIDだ。親プロセスのPIDさえわかれば、下記のようなコマンドで属する子プロセスを収集できる。
+
+# ps l --ppid=$PID_PARENT | grep 'some_daemon_child' | awk '{print $3}'
+
+--------------------------------------------------------------------------------------
+root@xxxxx#
+root@xxxxx# ps l --ppid="2480"
+F   UID   PID  PPID PRI  NI    VSZ   RSS WCHAN  STAT TTY        TIME COMMAND
+4     0  2517  2480  20   0 108096   920 -      R+   pts/1      0:00 ps l --ppid=2480
+root@xxxxx#
+root@xxxxx#
+root@xxxxx# ps l --ppid="2480" | grep "2480"
+4     0  2518  2480  20   0 108100   928 -      R+   pts/1      0:00 ps l --ppid=2480
+0     0  2519  2480  20   0 103320   868 pipe_w S+   pts/1      0:00 grep 2480
+root@xxxxx#
+root@xxxxx# ps l --ppid="2480" | grep "2480"
+4     0  2533  2480  20   0 108096   920 -      R+   pts/1      0:00 ps l --ppid=2480
+0     0  2534  2480  20   0 103320   868 pipe_w S+   pts/1      0:00 grep 2480
+root@xxxxx#
+root@xxxxx# ps l --ppid="2480" | grep "2480" | awk {'print $3'}
+2535
+2536
+2537
+root@xxxxx#
